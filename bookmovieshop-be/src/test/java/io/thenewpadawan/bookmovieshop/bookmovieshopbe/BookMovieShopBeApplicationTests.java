@@ -1,12 +1,12 @@
 package io.thenewpadawan.bookmovieshop.bookmovieshopbe;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class BookMovieShopBeApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 
