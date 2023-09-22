@@ -3,12 +3,16 @@ package io.thenewpadawan.bookmovieshop.bookmovieshopbe.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.thenewpadawan.bookmovieshop.bookmovieshopbe.dto.BookDTO;
 import io.thenewpadawan.bookmovieshop.bookmovieshopbe.service.BookService;
 
 @RestController
@@ -29,7 +33,7 @@ public class BookController {
 
 	@GetMapping(path = "/test")
 	public ResponseEntity<String> test() {
-		return new ResponseEntity<String>(
+		return new ResponseEntity<>(
 				bookService.test(),
 				HttpStatus.I_AM_A_TEAPOT);
 	}
@@ -40,4 +44,9 @@ public class BookController {
 //				bookServiceNaga.test(),
 //				HttpStatus.I_AM_A_TEAPOT);
 //	}
+	
+	@PostMapping(path = "/new")
+	public ResponseEntity<Void> create(@RequestBody BookDTO book) {
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
