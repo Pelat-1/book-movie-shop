@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent {
-
+  @Input()
+  toggler?: MatDrawer;
 }
