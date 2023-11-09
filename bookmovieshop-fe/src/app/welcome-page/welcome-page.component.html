@@ -1,1 +1,14 @@
 <h1>Benvenuti al Book Movie Shop</h1>
+<c-carousel (itemChange)="onItemChange($event)" [interval]="5000" transition="slide">
+    <c-carousel-inner>
+      <c-carousel-item *ngFor="let slide of slides">
+        <img
+          [src]="slide.src"
+          alt="{{slide.title}}"
+          class="d-block w-100"
+          loading="lazy"
+          width="100%"
+        />
+      </c-carousel-item>
+    </c-carousel-inner>
+  </c-carousel>
