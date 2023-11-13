@@ -1,6 +1,8 @@
 <app-toolbar [toggler]="sidenav"></app-toolbar>
 <mat-drawer-container hasBackdrop="true" class="example-container">
-  <mat-drawer #sidenav mode="over">Drawer content</mat-drawer>
+  <mat-drawer #sidenav mode="over">
+    <app-sidenav [toggler]="sidenav"></app-sidenav>
+  </mat-drawer>
   <mat-drawer-content>
     <router-outlet></router-outlet>
   </mat-drawer-content>
