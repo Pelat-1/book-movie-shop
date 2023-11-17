@@ -1,5 +1,7 @@
 <mat-nav-list>
     <mat-list-item *ngFor="let record of sidenav">
-        <a routerLink="{{record.link}}" (click)="toggler?.toggle()">{{record.name}}</a>
+        <a routerLink="{{record.link}}" (click)="toggler?.toggle()">
+           {{record.name}}
+        </a>
     </mat-list-item>
 </mat-nav-list>
