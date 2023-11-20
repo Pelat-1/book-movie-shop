@@ -38,15 +38,10 @@ public class BookController {
 				HttpStatus.I_AM_A_TEAPOT);
 	}
 
-//	@GetMapping(path = "/nagatest")
-//	public ResponseEntity<String> nagaTest() {
-//		return new ResponseEntity<String>(
-//				bookServiceNaga.test(),
-//				HttpStatus.I_AM_A_TEAPOT);
-//	}
-	
 	@PostMapping(path = "/new")
-	public ResponseEntity<Void> create(@RequestBody BookDTO book) {
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<BookDTO> create(@RequestBody BookDTO book) {
+		return new ResponseEntity<>(
+				bookService.create(book),
+				HttpStatus.CREATED);
 	}
 }

@@ -1,5 +1,6 @@
 package io.thenewpadawan.bookmovieshop.bookmovieshopbe.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,8 +16,11 @@ public class BookEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String title;
+	@Column(name = "firsteditionyear")
 	private Integer firstEditionYear;
-	private Integer editionNumber;
+	@Column(name = "editionnumber")
+	private Integer editionNumber = 1;
+	@Column(name = "printyear")
 	private Integer printYear;
 	private String genre;
 //	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

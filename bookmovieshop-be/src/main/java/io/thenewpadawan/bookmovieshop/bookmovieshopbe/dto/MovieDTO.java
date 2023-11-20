@@ -6,6 +6,6 @@ import lombok.Data;
 public class MovieDTO {
 	private String title;
 	private String director;
-	private Integer yar;
+	private Integer year;
 	private String genre;
 }
