@@ -9,6 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.thenewpadawan.bookmovieshop.bookmovieshopbe.dto.LoginRequestDTO;
+import io.thenewpadawan.bookmovieshop.bookmovieshopbe.entity.UserEntity;
+import io.thenewpadawan.bookmovieshop.bookmovieshopbe.mapper.UserMapper;
+import io.thenewpadawan.bookmovieshop.bookmovieshopbe.repository.UserRepository;
 import io.thenewpadawan.bookmovieshop.bookmovieshopbe.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,28 +20,41 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginServiceImpl implements LoginService {
 	private final PasswordEncoder passwordEncoder;
-	private final String salt;
+//	@Value("${application.security.salt}") private String salt;
 	private final String pepper;
+	private final UserMapper userMapper;
+	private final UserRepository userRepository;
 	
 	@Autowired
 	public LoginServiceImpl(
 			PasswordEncoder passwordEncoder,
-			@Value("${application.security.salt}") String salt,
-			@Value("${application.security.pepper}") String pepper) {
+			@Value("${application.security.pepper}") String pepper,
+			UserMapper userMapper,
+			UserRepository userRepository) {
 		this.passwordEncoder = passwordEncoder;
-		this.salt = salt;
 		this.pepper = pepper;
+		this.userMapper = userMapper;
+		this.userRepository = userRepository;
 	}
 	
 	@Override
-	public void login(LoginRequestDTO loginRequest) {
+	public void signIn(LoginRequestDTO loginRequest) {
 		log.info("Inizio login con dati: {}", loginRequest);
-		String passwordWithSaltAndPepper = "";
-		passwordWithSaltAndPepper += Objects.hash(salt, loginRequest.getEmail());
-		passwordWithSaltAndPepper += loginRequest.getPassword();
-		passwordWithSaltAndPepper += pepper;
-		loginRequest.setPassword(passwordEncoder.encode(passwordWithSaltAndPepper));
-		log.info("Fine login con password: {} e dati: {}", passwordWithSaltAndPepper, loginRequest);
+		String oldPassword = loginRequest.getPassword();
+		String passwordWithPepper = "";
+//		passwordWithSaltAndPepper += Objects.hash(salt, loginRequest.getEmail());
+		passwordWithPepper += oldPassword;
+		passwordWithPepper += pepper;
+		loginRequest.setPassword(passwordEncoder.encode(passwordWithPepper));
+		UserEntity userEntity = userMapper.entity(loginRequest);
+		
+		// TODO registrazione utente
+		log.info("Fine login con password: {}, email: {}, encryptedPassword: {}",
+				oldPassword,
+				loginRequest.getEmail(),
+				passwordWithPepper);
 	}
+	
+	
 
 }

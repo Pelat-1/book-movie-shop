@@ -16,6 +16,7 @@ public class BookEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String title;
+	//Column serve quando il nome del campo nel db non è perfettamete identico a questo della variabile
 	@Column(name = "firsteditionyear")
 	private Integer firstEditionYear;
 	@Column(name = "editionnumber")
