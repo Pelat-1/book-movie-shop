@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import io.thenewpadawan.bookmovieshop.bookmovieshopbe.dto.LoginRequestDTO;
+import io.thenewpadawan.bookmovieshop.bookmovieshopbe.dto.SignupRequestDTO;
 import io.thenewpadawan.bookmovieshop.bookmovieshopbe.entity.UserEntity;
-import io.thenewpadawan.bookmovieshop.bookmovieshopbe.mapper.UserMapper;
+import io.thenewpadawan.bookmovieshop.bookmovieshopbe.mapper.SignupMapper;
 import io.thenewpadawan.bookmovieshop.bookmovieshopbe.repository.UserRepository;
 import io.thenewpadawan.bookmovieshop.bookmovieshopbe.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,37 +22,42 @@ public class LoginServiceImpl implements LoginService {
 	private final PasswordEncoder passwordEncoder;
 //	@Value("${application.security.salt}") private String salt;
 	private final String pepper;
-	private final UserMapper userMapper;
+	private final SignupMapper signupMapper;
 	private final UserRepository userRepository;
 	
 	@Autowired
 	public LoginServiceImpl(
 			PasswordEncoder passwordEncoder,
 			@Value("${application.security.pepper}") String pepper,
-			UserMapper userMapper,
+			SignupMapper signupMapper,
 			UserRepository userRepository) {
 		this.passwordEncoder = passwordEncoder;
 		this.pepper = pepper;
-		this.userMapper = userMapper;
+		this.signupMapper = signupMapper;
 		this.userRepository = userRepository;
 	}
 	
 	@Override
-	public void signIn(LoginRequestDTO loginRequest) {
-		log.info("Inizio login con dati: {}", loginRequest);
-		String oldPassword = loginRequest.getPassword();
+	public void signup(SignupRequestDTO signupDTO) {
+		log.info("Inizio login con dati: {}", signupDTO);
+		String oldPassword = signupDTO.getPassword();
+		UserEntity userEntity = signupMapper.entity(signupDTO);
+		userEntity.setPassword(
+				passwordEncoder.encode(
+						signupDTO.getPassword() + this.pepper));
 		String passwordWithPepper = "";
 //		passwordWithSaltAndPepper += Objects.hash(salt, loginRequest.getEmail());
 		passwordWithPepper += oldPassword;
 		passwordWithPepper += pepper;
-		loginRequest.setPassword(passwordEncoder.encode(passwordWithPepper));
-		UserEntity userEntity = userMapper.entity(loginRequest);
-		
-		// TODO registrazione utente
+		signupDTO.setPassword(passwordEncoder.encode(passwordWithPepper));
+		userRepository.save(userEntity);
+		log.info("Ora dovrei avere l'id: {}", userEntity.getId());
+		// TODO return loginResponse
 		log.info("Fine login con password: {}, email: {}, encryptedPassword: {}",
 				oldPassword,
-				loginRequest.getEmail(),
+				signupDTO.getEmail(),
 				passwordWithPepper);
+		return;
 	}
 	
 	

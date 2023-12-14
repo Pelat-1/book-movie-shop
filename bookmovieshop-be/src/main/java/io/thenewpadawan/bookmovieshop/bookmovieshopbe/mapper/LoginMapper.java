@@ -7,7 +7,7 @@ import io.thenewpadawan.bookmovieshop.bookmovieshopbe.dto.LoginResponseDTO;
 import io.thenewpadawan.bookmovieshop.bookmovieshopbe.entity.UserEntity;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
+public interface LoginMapper {
 	// LoginRequestDTO -> UserEntity
 	UserEntity entity(LoginRequestDTO dto);
 	

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.thenewpadawan.bookmovieshop.bookmovieshopbe.dto.LoginRequestDTO;
+import io.thenewpadawan.bookmovieshop.bookmovieshopbe.dto.SignupRequestDTO;
 import io.thenewpadawan.bookmovieshop.bookmovieshopbe.service.LoginService;
 
 @RestController
@@ -23,8 +23,8 @@ public class LoginController {
 	}
 	
 	@PostMapping(path = "/login")
-	public ResponseEntity<Void> login(@RequestBody LoginRequestDTO loginRequest) {
-		loginService.signIn(loginRequest);
+	public ResponseEntity<Void> login(@RequestBody SignupRequestDTO signup) {
+		loginService.signup(signup);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
