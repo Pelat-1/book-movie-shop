@@ -10,10 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
-@Table(name = "user",
+@Table(
+		name = "bms_user",
 		schema = "book_movie_shop",
 		uniqueConstraints = {
 				@UniqueConstraint(columnNames = {"email"})
@@ -24,12 +26,17 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Size(min = 2, max = 32)
+	private String firstname;
+	@Size(min = 2, max = 32)
+	private String lastname;
 	@Column(nullable = false)
+	@Size(min = 6, max = 320)
 	private String email;
 	@Column(nullable = false)
 	private String password;
 	private String address;
 	private Date birthday;
-	@Column(nullable = false)
+	@Column(name = "registration_date", nullable = false)
 	private Timestamp registrationDate = new Timestamp(System.currentTimeMillis());
 }
